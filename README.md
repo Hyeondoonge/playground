@@ -10,16 +10,16 @@
 
 ### [🔗 배포 사이트](https://github.com/Hyeondoonge/pre-onboarding-11th-4#%EB%B0%B0%ED%8F%AC-%EC%82%AC%EC%9D%B4%ED%8A%B8)
 
-### [서비스 기능](https://github.com/Hyeondoonge/pre-onboarding-11th-4#%EC%84%9C%EB%B9%84%EC%8A%A4-%EA%B8%B0%EB%8A%A5)
+### [🪄 서비스 기능](https://github.com/Hyeondoonge/pre-onboarding-11th-4#-서비스-기능)
 
 ### [⛳️ 시작 방법](https://github.com/Hyeondoonge/pre-onboarding-11th-4#%EF%B8%8F-%EC%8B%9C%EC%9E%91-%EB%B0%A9%EB%B2%95-1)
 
 ### [⚒️ 기술 스택](https://github.com/Hyeondoonge/pre-onboarding-11th-4#%EF%B8%8F-%EA%B8%B0%EC%88%A0-%EC%8A%A4%ED%83%9D-1)
 
-### [✨ 주요 기능](https://github.com/Hyeondoonge/pre-onboarding-11th-4#-%EC%A3%BC%EC%9A%94-%EA%B8%B0%EB%8A%A5-1)
+### [✨ 주요 구현 사항](https://github.com/Hyeondoonge/pre-onboarding-11th-4#-주요-구현-사항)
 
-- [필수 기능](https://github.com/Hyeondoonge/pre-onboarding-11th-4#%ED%95%84%EC%88%98-%EA%B8%B0%EB%8A%A5)
-- [개인 추가 기능](https://github.com/Hyeondoonge/pre-onboarding-11th-4#%EA%B0%9C%EC%9D%B8-%EC%B6%94%EA%B0%80-%EA%B8%B0%EB%8A%A5)
+- [필수 구현](https://github.com/Hyeondoonge/pre-onboarding-11th-4#필수-구현)
+- [개인 추가 구현](https://github.com/Hyeondoonge/pre-onboarding-11th-4#개인-추가-구현)
 
 ### [？ 고민했던 부분](https://github.com/Hyeondoonge/pre-onboarding-11th-4#-%EA%B3%A0%EB%AF%BC%ED%96%88%EB%8D%98-%EB%B6%80%EB%B6%84-1)
 
@@ -103,7 +103,8 @@ $ npm build
 - API 요청 응답에 대한 로컬 캐싱 구현
 - debounce를 사용해 UX 개선 및 불필요한 통신 비용 발생 문제 개선
 - 위, 아래 방향키 입력 시 검색어를 탐색할 수 있는 기능 구현
-  <br><br>
+
+<br>
 
 ### 개인 추가 구현
 
@@ -144,10 +145,14 @@ Local storage에 저장할 경우 서비스를 나갔다와도 캐싱 데이터�
 직접 접근해서 수정하는 경우가 있을 수 있습니다. 이를 대비해 데이터의 형식을 확인하여 옳은 값을 가져오도록 했습니다.
 크게 Null 인지, 데이터 형식이 옳은지, 유효기간이 지나지 않았는지를 검사하도록 구현했습니다.
 
+<br>
+
 ### 입력마다 API 호출하지 않도록 API 호출 횟수를 줄이는 전략 수립 및 실행 ([< > useDebounce](https://github.com/Hyeondoonge/pre-onboarding-11th-4/blob/devleop/src/hooks/useDebounce.ts))
 
 연속된 입력이 발생할 경우 불필요한 통신 비용이 발생할 수 있습니다. 이러한 상황에서 사용할 수 있는 debounce 기법을 이용했습니다.
 추상화를 위해 훅으로 분리했습니다.
+
+<br>
 
 ### 키보드만으로 추천 검색어들로 이동 가능 ([< > Result](https://github.com/Hyeondoonge/pre-onboarding-11th-4/blob/devleop/src/components/Result/Result.tsx))
 

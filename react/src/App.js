@@ -6,9 +6,10 @@ function App() {
   const ref = useRef(null);
   const { issueList, fetchMoreIssues } = useIssues();
   const [observe] = useIntersectionObserver(() => {
-    console.log('observe');
     fetchMoreIssues();
   });
+
+  // () => { fetchMoreIssues(); } 0x1122
 
   useEffect(() => {
     observe(ref.current);

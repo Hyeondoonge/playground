@@ -38,7 +38,7 @@ const data = [
 ];
 
 export const getIssueList = async (NEXT_PAGE) => {
-  console.log(data.slice((NEXT_PAGE - 1) * 5, NEXT_PAGE * 5));
+  // console.log(data.slice((NEXT_PAGE - 1) * 5, NEXT_PAGE * 5));
   return new Promise((resolve) => {
     setTimeout(() => {
       resolve(data.slice((NEXT_PAGE - 1) * 5, NEXT_PAGE * 5));

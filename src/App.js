@@ -1,23 +1,29 @@
-import logo from './logo.svg';
-import './App.css';
+import { useEffect, useRef } from 'react';
+import useIntersectionObserver from './hooks/useIntersectionObserver';
+import useIssues from './hooks/useIssues';
 
 function App() {
+  const ref = useRef(null);
+  const { issueList, fetchMoreIssues } = useIssues();
+  const [observe] = useIntersectionObserver(() => {
+    console.log('observe');
+    fetchMoreIssues();
+  });
+
+  useEffect(() => {
+    observe(ref.current);
+  }, []);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+        {issueList.map(({ sickNm }, index) => (
+          <div key={index} style={{ width: '100%', height: 150, backgroundColor: 'pink' }}>
+            {sickNm}
+          </div>
+        ))}
+      </div>
+      <div ref={ref}></div>
     </div>
   );
 }

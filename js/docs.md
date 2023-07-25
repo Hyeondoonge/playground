@@ -1,9 +1,11 @@
 ## 실행 컨텍스트
 
-자바스크립트가 실행되기위해 필요한 환경
+자바스크립트가 실행되기위해 필요한 환경이다. **전역 실행 컨텍스트**와 **함수 실행 컨텍스트** 두 가지로 분류된다.
 
 1. 전역 실행 컨텍스트: 코드 실행 시 생성되는 컨텍스트로 전역에서 관리되는 값들을 관리
 2. 함수 실행 컨텍스트: 함수가 호출될 때마다 생성되는 컨텍스트
+
+<br>
 
 ### 콜 스택(실행 컨텍스트 스택)
 
@@ -17,7 +19,11 @@ LIFO 구조로 실행 컨텍스트가 관리된다. 이러한 구조를 통해 �
 
 [global, foo] -> bar 동작 완료되어서 스택에서 꺼내고, foo를 이어서 실행
 
-### 실행 컨텍스트 동작
+<br>
+
+### 실행 컨텍스트의 동작
+
+평가 후 실행하는 것을 기억하면 된다. 먼저 내부 코드를 쓱 훑어본다음 함수를 실행하는 것이다.
 
 1. 평가
 
@@ -28,7 +34,9 @@ LIFO 구조로 실행 컨텍스트가 관리된다. 이러한 구조를 통해 �
 
 - **선언문 제외한** 코드를 실행 ex) 변수에 값 할당, 함수 호출
 
-### 실행 컨텍스트 내부
+<br>
+
+### 실행 컨텍스트를 구성하는 것
 
 모든 실행 컨텍스트는 lexical enviornment라는 객체가 존재한다. 이는 스코프를 관리하는 역할을 하며, 변수, 함수 정의와 값들을 저장하는 역할이 있다.
 
@@ -47,7 +55,7 @@ LIFO 구조로 실행 컨텍스트가 관리된다. 이러한 구조를 통해 �
 
 자바스크립트 코드가 실행될 때 가장 먼저 GlobalContext가 먼저 생성된다. 전역에서 우리가 흔히 접근할 수 있는 빌트인 객체들이 글로벌 영역에 저장된다.
 
-아래는 LexicalEnvironment의 구성요소
+아래는 LexicalEnvironment의 구성요소이다.
 
 - DeclarativeEnvironmentRecord - let, const
 - ObjectEnvirontmentRecord - var, 전역 함수, 빌트인 프로퍼티
@@ -58,7 +66,7 @@ LIFO 구조로 실행 컨텍스트가 관리된다. 이러한 구조를 통해 �
 
 함수가 호출되면 Function 실행 컨텍스트가 생성되어 call stack에 쌓인다. 이때도 마찬가지로 평가 -> 실행 과정을 거친다.
 
-아래는 LexicalEnvironment의 구성요소
+아래는 LexicalEnvironment의 구성요소이다.
 
 - FunctionEnvironmnetRecord
   - 매개변수, 지역 변수, 함수 등록
@@ -71,31 +79,66 @@ OuterEnvironemtReference는 함수가 정의되는 시점에 해당 함수에 �
 
 이를 통해 함수 실행 컨텍스트 생성 시, 외부 환경에 대한 참조값 할당이 가능한 것!
 
+<br>
+
 ## 클로져(Closure)
 
-함수 호출로 인해 반환되는 함수로, 반환된 함수는 선언될 당시의 외부 환경을 기억하고 있음
+> 클로저는 함수와 함수가 선언된 어휘적 환경의 조합이다. - mdn web docs
 
-private field 사용, 실제로 react hooks api 구현할 때도 이 기술이 적용됨
+클로져라고 하는 것은 함수 호출로 인해 반환되는 함수이고, 반환된 함수는 선언될 당시의 외부 환경을 기억하고 있다.
+이러한 동작이 가능한 것은 지금까지 살펴본 자바스크립트 동작 방식 때문이다.
 
-```
-function outer () {
-  const x = 'hello, world'
+```javascript
+function outer() {
+  const greet = 'hello, world';
 
-  return function inner () {
-    console.log("x", x)
-  }
+  return function inner() {
+    console.log('greet: ', greet);
+  };
 }
 
 const inner = outer();
+inner(); // greet: hello, world
 ```
 
-outer의 실행컨텍스트는 제거되지만, inner가 outer environment reference를 가지고 이를 통해 외부 환경에 접근한다.
+함수의 호출이 끝나면 함수에 대한 실행 컨텍스트가 콜스택에서 제거된다. 그리고 이 실행컨텍스트에는 식별자, this 정보, outer reference 등에 대한 정보가 있다.
 
-⭐️ 실행 컨텍스트와 LexicalEnvironment 객체가 독립된 것이라는 것이 중요
+근데 어떻게 inner함수 내부에서 greet 식별자에 접근할 수 있는가 하면, outer 함수에 대한 실행 컨텍스트가 제거되지만 lexcial environment에 대한 정보는 사라지지 않기 때문이다.
 
-> Garbage Collecting
->
-> 매모리 관리를 자동화 하는 기술로, 고수준 프로그래밍 언어들은 이러한 과정을 엔진차원에서 자동으로 처리해줌
-> 이때, 불필요한 정보들을 메모리에서 지운다
->
-> 일반적으로 값이 더 이상 사용되지 않거나, 참조되지 않는다고 판단되면 해당 값을 제거하고 메모리를 점유 해제한다
+아래는 실행 컨텍스트 객체의 예시코드로 Outer, Inner 각 prefix는 위에서 정의한 함수들의 환경임을 편의상 표현한 것이다.
+
+Lexical environment가 context에 의존하지 않는 것을 볼 수 있다.
+해당 값은 outer 실행 컨텍스트가 내부 코드를 읽으며 식별자, 함수 등을 정의할 때 그들의 environment로서 할당된다.
+
+```javascript
+const outer = {
+  inner: {
+    [[Environment]]: OuterFunctionLexicalEnvironment
+  }
+};
+
+const OuterFunctionLexicalEnvironment = {
+  // record, outer reference 정보 포함
+};
+
+const OuterFunctionContext = {
+  lexicalEnvironment: OuterFunctionLexicalEnvironment
+};
+```
+
+이를 통해 현재 lexical environment를 참조하고 있는 곳은 inner의 environment와 실행 컨텍스트 내부인 것을 알 수 있다.
+
+중요한 것은 JS 가비지 컬렉터는 일반적으로 더이상 참조되지 않는 값은 메모리에서 제거한다는 점이다. 이러한 이유로
+Outer 함수 실행이 끝나서 실행 컨텍스트가 제거되어 lexical environment에 대한 참조가 제거되더라도, inner 함수가 참조를 갖고있기 때문에 outer의 lexical environment가 유지되어 접근할 수 있는 것이다.
+
+만약 실행컨텍스트가 제거될 때 lexical environment가 제거된다면 하위 스코프에서 상위 스코프의 데이터에 접근하지 못하게 될 것이다.
+
+<br>
+
+### 클로져의 활용
+
+프라이빗하게 사용할 수 있는 메소드 또는 변수를 위해 클로져를 사용할 수 있다. 이를 통해 제한적인 접근 또는 전역 네임 스페이스 관리가 가능하다.
+
+또한 실제로 React의 hooks API들은 클로져를 이용해 내부적으로 동작한다고 한다.
+
+---

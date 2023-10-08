@@ -1,0 +1,19 @@
+{
+  "include": ["src"],
+  "exclude": ["node_modules"],
+  "compilerOptions": {
+    /* ✓ Type Checking */
+    "noImplicitAny": true,
+    "strict": true,
+    /* Language and Environment */
+    "target": "es6",
+    "lib": ["dom", "esnext"],
+    "jsx": "preserve",
+    /* Modules */
+    "baseUrl": "./src",
+    "isolatedModules": true,
+    "forceConsistentCasingInFileNames": true,
+    "esModuleInterop": true,
+    "moduleResolution": "Node"
+  }
+}

@@ -8,16 +8,8 @@ import React, { useEffect, useState } from 'react';
 // 구체적인 에러처리는 부모 컴포넌트인 ErrorBoundary가 처리한다.
 
 export default function Product() {
-  const { product, error: pError } = useProduct();
-  const { reviews, error: rError } = useReviews();
-
-  if (pError) {
-    throw pError;
-  }
-
-  if (rError) {
-    throw rError;
-  }
+  const { product } = useProduct();
+  const { reviews } = useReviews();
 
   return (
     <div>

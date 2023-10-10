@@ -33,5 +33,10 @@ export default function useReviews() {
 
     fetchReview();
   }, []);
+
+  if (error) {
+    throw error;
+  }
+
   return { reviews, error };
 }

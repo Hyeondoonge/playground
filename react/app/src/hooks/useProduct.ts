@@ -37,5 +37,9 @@ export default function useProduct() {
     fetchProduct();
   }, []);
 
+  if (error) {
+    throw error;
+  }
+
   return { product, error };
 }

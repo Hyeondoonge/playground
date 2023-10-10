@@ -6,12 +6,18 @@ interface Product {
   introduction: string;
 }
 
+interface Reviews {
+  productTitle: string;
+  count: number;
+}
+
 export function ProductFallback() {
   return <div>💥 에러가 발생했어요</div>;
 }
 
 export default function Product() {
   const [product, setProduct] = useState<Product | null>(null);
+  const [reviews, setReviews] = useState<Reviews | null>(null);
   const [error, setError] = useState<boolean>(false);
 
   useEffect(() => {
@@ -34,6 +40,27 @@ export default function Product() {
     };
 
     fetchProduct();
+  }, []);
+
+  useEffect(() => {
+    const fetchReview = async () => {
+      try {
+        const reviews: Reviews = {
+          productTitle: '밥',
+          count: 30
+        };
+
+        if (reviews.productTitle !== 'iPhone 9') {
+          setError(true);
+          return;
+        }
+        setReviews(reviews);
+      } catch (error: unknown) {
+        setError(true);
+      }
+    };
+
+    fetchReview();
   }, []);
 
   if (error) {

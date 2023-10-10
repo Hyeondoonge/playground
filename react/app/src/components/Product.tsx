@@ -18,7 +18,7 @@ export function ProductFallback() {
 export default function Product() {
   const [product, setProduct] = useState<Product | null>(null);
   const [reviews, setReviews] = useState<Reviews | null>(null);
-  const [error, setError] = useState<boolean>(false);
+  const [error, setError] = useState<unknown>(null);
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -30,12 +30,16 @@ export default function Product() {
         const product: Product = await res.json();
 
         if (product.title !== 'iPhone 9') {
-          setError(true);
+          setError(new Error('찾는 상품이 아니에요'));
           return;
         }
         setProduct(product);
       } catch (error: unknown) {
-        setError(true);
+        if (error instanceof Error) {
+          setError(error);
+        } else {
+          setError(new Error('정보를 알 수 없는 에러'));
+        }
       }
     };
 
@@ -51,12 +55,16 @@ export default function Product() {
         };
 
         if (reviews.productTitle !== 'iPhone 9') {
-          setError(true);
+          setError(new Error('찾는 리뷰가 아니에요'));
           return;
         }
         setReviews(reviews);
       } catch (error: unknown) {
-        setError(true);
+        if (error instanceof Error) {
+          setError(error);
+        } else {
+          setError(new Error('정보를 알 수 없는 에러'));
+        }
       }
     };
 
@@ -64,7 +72,7 @@ export default function Product() {
   }, []);
 
   if (error) {
-    throw new Error();
+    throw error;
   }
 
   return (

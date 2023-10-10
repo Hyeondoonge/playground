@@ -13,7 +13,7 @@ export default function useReviews() {
     const fetchReview = async () => {
       try {
         const reviews: Reviews = {
-          productTitle: '밥',
+          productTitle: 'iPhone 9', // success when reviews.productTitle iPhone 9
           count: 30
         };
 

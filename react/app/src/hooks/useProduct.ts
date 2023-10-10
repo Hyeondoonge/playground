@@ -20,6 +20,7 @@ export default function useProduct() {
         const product: Product = await res.json();
 
         if (product.title !== 'iPhone 11') {
+          // success when product.title iPhone 9
           setError(new Error('찾는 상품이 아니에요'));
           return;
         }

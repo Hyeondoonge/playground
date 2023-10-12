@@ -1,4 +1,5 @@
 import React, { ErrorInfo, ReactNode } from 'react';
+import { MdRefresh } from 'react-icons/md';
 
 interface IProps {
   fallback: ReactNode;
@@ -6,19 +7,23 @@ interface IProps {
 }
 
 interface IState {
+  refresh: boolean;
   hasError: boolean;
 }
 
 export default class ErrorBoundary extends React.Component<IProps, IState> {
   constructor(props: IProps) {
     super(props);
-    this.state = { hasError: false }; // 에러 상태 지정
+    this.state = {
+      refresh: false,
+      hasError: false
+    }; // 에러 상태 지정
   }
 
   static getDerivedStateFromError(error: unknown) {
     // 에러 발생 시, 상태를 변경하여 이에 따른 fallback UI를 렌더링한다
     // error는 컴포넌트에서 던진 에러
-    return { hasError: true };
+    return { hasError: true, refresh: false };
   }
 
   componentDidCatch(error: unknown, info: ErrorInfo) {
@@ -39,8 +44,20 @@ export default class ErrorBoundary extends React.Component<IProps, IState> {
   render() {
     const { fallback, children } = this.props;
 
+    if (this.state.refresh) {
+      return children;
+    }
+
     if (this.state.hasError) {
-      return fallback;
+      return (
+        <div>
+          {fallback}
+          다시 시도할까요?
+          <div onClick={() => this.setState({ hasError: false, refresh: true })}>
+            <MdRefresh />
+          </div>
+        </div>
+      );
     }
 
     return children;

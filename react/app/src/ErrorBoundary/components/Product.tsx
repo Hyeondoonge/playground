@@ -1,5 +1,5 @@
-import useProduct from 'hooks/useProduct';
-import useReviews from 'hooks/useReviews';
+import useProduct from 'ErrorBoundary/hooks/useProduct';
+import useReviews from 'ErrorBoundary/hooks/useReviews';
 import React, { useEffect, useState } from 'react';
 
 // 에러가 발생하여, 정상적인 데이터를 가져올 수 없을 때 화면깨짐을 방지하고

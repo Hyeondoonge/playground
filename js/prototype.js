@@ -5,12 +5,12 @@
 
 // // 모든 객체는 '프로토타입'을 갖고, 프로토타입 체인의 끝은 최상위 객체인 Object이다.
 // // 따라서 다른 객체들과 달리 Object 프로토타입에대한 프로토타입은 null이다.
-// console.log(Object.prototype.__proto__); // null
+console.log(Object.prototype.__proto__); // null
 // // 이러한 특징으로 모든 객체는 Object의 속성 및 메소드에 접근할 수 있다
 
-// // prototype에는 3가지 구성요소가 관여한다.
-
-// // 1. 생성자 함수
+// prototype 이해에는 아래의 3가지 주요 개념이 따른다.
+// 1. 생성자 함수
+// { prototype, __proto__ }
 function Person(age, name) {
   this.age = age;
   this.name = name;
@@ -27,9 +27,18 @@ Person.prototype.greet = function () {
 
 // 2. 프로토타입
 // 생성자 함수를 통해 만들어진 인스턴스들이 참조하는 원형 객체이다.
-// 이는 생성자 함수의 'prototype' 속성과
-// 생성자 함수로 만들어진 인스턴스의 '__proto__' 속성 또는 내부 슬록 [[Prototype]]으로 접근할 수 있다
+// { constructor, __proto__ }
+// 본인을 생성한 함수의 constructor 속성을 가진다.
+
+// '프토토타입'은 생성자 함수의 'prototype' 속성
+// 생성자 함수로 만들어진 인스턴스의 '__proto__' 속성 및 내부 슬록 [[Prototype]]을 통해 접근할 수 있다
 const p1 = new Person(24, '현정');
-console.log(Person.prototype === p1.__proto__);
+console.log(Person.prototype === p1.__proto__); // true
 
 // 3. 생성자 함수를 통해 만들어지는 인스턴스
+// { __proto__, 부모 계층의 속성 및 메소드 }
+// p1와 같은 인스턴스는 원형 객체, 즉 프로토타입을 참조하는 속성을 가진다
+// 이렇듯 프로토타입들이 계층적으로 연결되어있는 것을 '프로토타입 체인'이라고 하고
+// 이러한 동작 때문에 부모 계층의 속성 및 메소드에 접근하는 것이 가능하다.
+console.log(p1.__proto__.__proto__ === Object.prototype); // true
+console.log(p1.constructor);

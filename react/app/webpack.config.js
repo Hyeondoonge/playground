@@ -1,7 +1,7 @@
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
-const path = require('path');
-const { ProvidePlugin } = require('webpack');
+const HtmlWebpackPlugin = require('html-webpack-plugin')
+const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin')
+const path = require('path')
+const { ProvidePlugin } = require('webpack')
 
 module.exports = {
   mode: 'development',
@@ -23,6 +23,11 @@ module.exports = {
           },
           { loader: 'ts-loader' }
         ]
+      },
+      {
+        test: /\.css$/,
+        exclude: path.resolve(__dirname, 'node_modules'),
+        use: ['style-loader', 'css-loader']
       }
     ]
   },
@@ -37,4 +42,4 @@ module.exports = {
     path: path.resolve(__dirname, 'dist'),
     clean: true
   }
-};
+}

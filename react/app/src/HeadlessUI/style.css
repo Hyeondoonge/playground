@@ -1,0 +1,38 @@
+button {
+  all: unset;
+}
+
+.PopoverTrigger {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  padding: 0 15px;
+  font-size: 15px;
+  line-height: 1;
+  font-weight: 500;
+  height: 35px;
+  background-color: white;
+  color: purple;
+  box-shadow: 0 2px 5px #ababab;
+}
+.PopoverTrigger:focus {
+  box-shadow: 0 0 0 2px black;
+}
+
+.PopoverContent {
+  border-radius: 4px;
+  padding: 20px;
+  width: 260px;
+  font-size: 15px;
+  line-height: 1;
+  color: purple;
+  background-color: white;
+  outline: none;
+  box-shadow: hsl(206 22% 7% / 35%) 0px 10px 38px -10px, hsl(206 22% 7% / 20%) 0px 10px 20px -15px,
+    0 0 0 2px purple;
+}
+
+.PopoverArrow {
+  fill: white;
+}
